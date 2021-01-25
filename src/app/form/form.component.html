@@ -1,0 +1,117 @@
+<div class="container pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <header>
+                    <div class="card-header bg-primary">
+                        <h4 class="card-title text-center text-white">
+                            Register
+                        </h4>
+                    </div>
+                </header>
+                <div class="card-body">
+                  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="font-weight-bold">First name</label>
+                                <input type="text" class="form-control" placeholder="Enter your first name" formControlName="fname">
+                                <small class="text-danger" [class.d-none]="registerForm.get('fname').valid || registerForm.get('fname').untouched">First Name is required</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="font-weight-bold">Last name</label>
+                                
+                                <input type="text" class="form-control" placeholder="Enter your last name" formControlName="lname">
+                                <small class="text-danger" [class.d-none]="registerForm.get('lname').valid || registerForm.get('lname').untouched">Last Name is required</small>
+                            </div>
+                        </div>
+                            
+                        
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold">Email</label>
+                        <input type="text" class="form-control" placeholder="Enter your email" formControlName="email">
+                        <small class="text-danger" [class.d-none]="registerForm.get('email').valid || registerForm.get('email').untouched">Email is required</small>
+                    </div>
+                      
+                    <div class="form-group">
+                        <label for="example-date-input" class="font-weight-bold">Date of Birth</label>
+                        
+                          <input class="form-control" type="date" value="2011-08-19" id="example-date-input" formControlName="dob">
+                          <small class="text-danger" [class.d-none]="registerForm.get('dob').valid || registerForm.get('dob').untouched">Date of birth is required</small>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress" class="form-label" class="font-weight-bold">Address</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" formControlName="address">
+                        <small class="text-danger" [class.d-none]="registerForm.get('address').valid || registerForm.get('address').untouched">Address is required</small>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputAddress2" class="form-label" class="font-weight-bold">Contact Number</label>
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Enter your contact number" formControlName="tel">
+                        <!-- <small class="text-danger" [class.d-none]="registerForm.get('tel').valid || registerForm.get('tel').untouched">Contact number is required</small> -->
+                        <!-- <small class="text-danger" *ngIf="registerForm.get('tel').invalid && registerForm.get('tel').touched">Mobile Number is required.</small> -->
+                        <small *ngIf="registerForm.get('tel').invalid && registerForm.get('tel').touched" class="text-danger">Phone no is Required(minimum length 10,numbers are only allowed)</small>
+                        <!-- <small class="text-danger" *ngIf="registerForm.get('tel').errors.pattern">Please, Enter 10 digit Mobile Number.</small> -->
+                      </div>
+                      <label class="font-weight-bold">Gender</label>
+                    <div class="form-group">
+                        <div>
+                            <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" value="option1" formControlName="gender">
+                                <span class="form-check-label"> Male </span>
+                              </label>
+                          <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" value="option2" formControlName="gender">
+                                <span class="form-check-label"> Female</span>
+                              </label>
+                        </div>
+                        
+                            
+                            <small class="text-danger" [class.d-none]="registerForm.get('gender').valid || registerForm.get('gender').untouched">Select your gender</small>
+ 
+                    </div>
+                   
+                    <div class="form-group">
+                        <label class="font-weight-bold">Set New Password:</label>
+                        <input type="password" id="password" name="password" class="form-control" data-toggle="password" placeholder="Enter your password" formControlName="psw">
+                        <!-- <small class="text-danger" [class.d-none]="registerForm.get('psw').valid || registerForm.get('psw').untouched">Password is required</small> -->
+
+                        <p *ngIf="registerForm.get('psw').errors?.strong" class="text-danger">Password is required!</p>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold">Confirm Password:</label>
+                        <input type="password" id="password" name="password" class="form-control" data-toggle="password" placeholder="Re-type your password" formControlName="pswrpt">
+                        <small class="text-danger" [class.d-none]="registerForm.get('pswrpt').valid || registerForm.get('pswrpt').untouched">Confirm Password is required</small>
+                    </div>
+                      <!-- Add skills -->
+                      <label class="font-weight-bold">Skills</label>
+                    <div class="form-group" formArrayName="skills">
+                         <ng-container *ngFor="let skill of registerForm.get('skills')['controls'];let i=index">
+                            <input type="text" class="form-control mt-2" id="inputAddress2" placeholder="Add skills" formControlName="{{i}}">
+                            
+                         </ng-container>
+                        
+                        
+                            <button class="btn btn-light btn-sm mt-2" (click)="onAdd()">+ Add Skills</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="formFile" class="form-label" class="font-weight-bold">Choose your Resume</label>
+                        <input class="form-control" type="file" id="formFile" formControlName="file">
+                        <p *ngIf="registerForm.controls.file.errors?.required" class="text-danger">This field is required!</p>
+
+                      </div>
+
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
