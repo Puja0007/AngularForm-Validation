@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup,AbstractControl, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup,AbstractControl, Validators, FormBuilder } from '@angular/forms';
 import { FileValidator } from './file-input.validator';
 import { PasswordStrengthValidator} from './password.validator';
 
@@ -11,21 +11,21 @@ import { PasswordStrengthValidator} from './password.validator';
 })
 export class FormComponent implements OnInit {
   registerForm:FormGroup;
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.registerForm=new FormGroup({
-      'fname': new FormControl('',Validators.required),
-      'lname' : new FormControl('',Validators.required),
-      'email': new FormControl('',[Validators.required,Validators.email]),
-      'dob': new FormControl('',Validators.required),
-      'address':new FormControl('',Validators.required),
-      'tel': new FormControl('',[Validators.required,Validators.pattern('^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$')]),
-      'gender': new FormControl('',Validators.required),
-      'psw': new FormControl('',[Validators.required,PasswordStrengthValidator]),
-      'pswrpt': new FormControl('',[Validators.required]),
+    this.registerForm=this.fb.group({
+      'fname': ['',Validators.required],
+      'lname' : ['',Validators.required],
+      'email': ['',Validators.required,Validators.email],
+      'dob': ['',Validators.required],
+      'address':['',Validators.required],
+      'tel': ['',Validators.required,Validators.pattern('^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$')],
+      'gender': ['',Validators.required],
+      'psw': ['',Validators.required,PasswordStrengthValidator],
+      'pswrpt': ['',[Validators.required]],
      
-      'file': new FormControl('',[FileValidator.validate,Validators.required]),
+      'file': ['',[FileValidator.validate,Validators.required]],
       'skills':new FormArray([
         new FormControl(null,Validators.required),
     
