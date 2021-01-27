@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup,AbstractControl, Validators } from '@angular/forms';
 import { FileValidator } from './file-input.validator';
-import { PasswordValidator } from './password.validator';
+import { PasswordStrengthValidator} from './password.validator';
 
 
 @Component({
@@ -22,29 +22,37 @@ export class FormComponent implements OnInit {
       'address':new FormControl('',Validators.required),
       'tel': new FormControl('',[Validators.required,Validators.pattern('^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$')]),
       'gender': new FormControl('',Validators.required),
-      'psw': new FormControl('',Validators.required),
-      'pswrpt': new FormControl('',[Validators.required,PasswordValidator.strong]),
-      'file': new FormControl('',[FileValidator.validate]),
+      'psw': new FormControl('',[Validators.required,PasswordStrengthValidator]),
+      'pswrpt': new FormControl('',[Validators.required]),
+     
+      'file': new FormControl('',[FileValidator.validate,Validators.required]),
       'skills':new FormArray([
         new FormControl(null,Validators.required),
     
-      ])
-
-
-    })
+      ]),
+    }
+    );
   }
   onSubmit(){
     
     if(!this.registerForm.valid)
     {
-      this.markFormGroupTouched(this.registerForm)
+      this.markFormGroupTouched(this.registerForm);
+      console.log(this.registerForm);
     }
     else{
       console.log(this.registerForm);
     }
   }
+  get formArr(){
+    return this.registerForm.get('skills') as FormArray;
+  }
   onAdd(){
-    (<FormArray>this.registerForm.get('skills')).push(new FormControl(null));
+    (<FormArray>this.registerForm.get('skills')).push(new FormControl(null,Validators.required));
+  }
+
+  onDelete(i:number){
+    this.formArr.removeAt(i);
   }
   private markFormGroupTouched(formGroup: FormGroup) {
     (<any>Object).values(formGroup.controls).forEach(control => {

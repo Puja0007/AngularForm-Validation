@@ -1,22 +1,35 @@
-import { FormControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from "@angular/forms"
 
-export interface ValidationResult {
-    [key: string]: boolean;
-}
+export const PasswordStrengthValidator = function (control: AbstractControl): ValidationErrors | null {
 
-export class PasswordValidator {
+  let value: string = control.value;
 
-    public static strong(control: FormControl): ValidationResult {
-        let hasNumber = /\d/.test(control.value);
-        let hasUpper = /[A-Z]/.test(control.value);
-        let hasLower = /[a-z]/.test(control.value);
-        let hasspl=  /[$&+,:;=?@#|'<>.-^*()%!]/.test(control.value);
-        // console.log('Num, Upp, Low', hasNumber, hasUpper, hasLower);
-        const valid = hasNumber && hasUpper && hasLower && hasspl;
-        if (!valid) {
-            // return what´s not valid
-            return { strong: true };
-        }
-        return null;
-    }
+  if (!value) {
+    return null
+  }
+
+  let upperCaseCharacters = /[A-Z]+/g
+  if (upperCaseCharacters.test(value) === false) {
+    return { passwordStrength: `Password has to contine Upper case characters,current value ${value}` };
+  }
+
+  let lowerCaseCharacters = /[a-z]+/g
+  if (lowerCaseCharacters.test(value) === false) {
+    return { passwordStrength: `Password has to contine lower case characters,current value ${value}` };
+  }
+
+
+  let numberCharacters = /[0-9]+/g
+  if (numberCharacters.test(value) === false) {
+    return { passwordStrength: `Password has to contine number characters,current value ${value}` };
+  }
+  if(value.length<8){
+      return {passwordStrength: `Password should contain atleast 8 character,current value ${value}`};
+  }
+
+  let specialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/
+  if (specialCharacters.test(value) === false) {
+    return { passwordStrength: `Password has to contine special character,current value ${value}` };
+  }
+  return null;
 }

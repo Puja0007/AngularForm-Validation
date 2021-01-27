@@ -6,6 +6,19 @@ import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordStrengthMeterComponent } from './password-strength-meter/password-strength-meter.component';
+import { FeatherModule } from 'angular-feather';
+import { Camera, Heart, Github, User,Cpu,Eye,Plus,X } from 'angular-feather/icons';
+
+
+
+const icons = {
+  Camera,
+  Heart,
+  Github,
+  User,
+  Cpu,
+  Eye,Plus,X
+};
 
 @NgModule({
   declarations: [
@@ -16,7 +29,9 @@ import { PasswordStrengthMeterComponent } from './password-strength-meter/passwo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FeatherModule.pick(icons),
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

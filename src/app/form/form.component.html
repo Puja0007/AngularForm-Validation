@@ -77,9 +77,11 @@
                     <div class="form-group">
                         <label class="font-weight-bold">Set New Password:</label>
                         <input type="password" id="password" name="password" class="form-control" data-toggle="password" placeholder="Enter your password" formControlName="psw">
-                        <!-- <small class="text-danger" [class.d-none]="registerForm.get('psw').valid || registerForm.get('psw').untouched">Password is required</small> -->
+                        <small class="text-danger" [class.d-none]="registerForm.get('psw').dirty || registerForm.get('psw').valid || registerForm.get('psw').untouched">Password is required</small>
 
-                        <p *ngIf="registerForm.get('psw').errors?.strong" class="text-danger">Password is required!</p>
+                        <small class="text-danger" *ngIf="registerForm.get('psw').hasError('passwordStrength')">
+                            {{registerForm.get('psw').errors['passwordStrength']}}
+                        </small>
                         
                     </div>
                     <div class="form-group">
@@ -89,21 +91,30 @@
                     </div>
                       <!-- Add skills -->
                       <label class="font-weight-bold">Skills</label>
-                    <div class="form-group" formArrayName="skills">
-                         <ng-container *ngFor="let skill of registerForm.get('skills')['controls'];let i=index">
-                            <input type="text" class="form-control mt-2" id="inputAddress2" placeholder="Add skills" formControlName="{{i}}">
+                      
+                        <div class="form-group has-error has-feedback" formArrayName="skills">
+                            <ng-container *ngFor="let skill of registerForm.get('skills')['controls'];let i=index">
+                                <div class="form-inline">
+                                    <input type="text" class="form-control mt-2" id="inputAddress2" placeholder="Enter skill" formControlName="{{i}}">
+                                    <button class="btn btn-light btn-sm ml-1" (click)="onDelete(i)">- Remove skill</button>
                             
-                         </ng-container>
-                        
-                        
-                            <button class="btn btn-light btn-sm mt-2" (click)="onAdd()">+ Add Skills</button>
-                    </div>
+                                </div>
+                               
+                             <small class="text-danger" [class.d-none]="registerForm.get('skills')['controls'][i].valid || registerForm.get('skills')['controls'][i].untouched">Skills are required</small> 
+                            </ng-container>
+                           
+                           
+                               
+                        </div>
+                      
+                        <button class="btn btn-light btn-sm mt-2" (click)="onAdd()">+ Add Skills</button>
 
                     <div class="form-group">
                         <label for="formFile" class="form-label" class="font-weight-bold">Choose your Resume</label>
                         <input class="form-control" type="file" id="formFile" formControlName="file">
-                        <p *ngIf="registerForm.controls.file.errors?.required" class="text-danger">This field is required!</p>
-
+                        <p class="text-danger" [class.d-none]="registerForm.get('file').valid || registerForm.get('file').untouched">This field is required!</p>
+                         
+                        
                       </div>
 
                       <div class="form-group">
