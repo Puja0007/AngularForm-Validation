@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PasswordStrengthMeterComponent } from './password-strength-meter/password-strength-meter.component';
+
 import { FeatherModule } from 'angular-feather';
 import { Camera, Heart, Github, User,Cpu,Eye,Plus,X } from 'angular-feather/icons';
 
@@ -24,7 +24,7 @@ const icons = {
   declarations: [
     AppComponent,
     FormComponent,
-    PasswordStrengthMeterComponent
+    
   ],
   imports: [
     BrowserModule,

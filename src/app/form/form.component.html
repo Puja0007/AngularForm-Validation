@@ -17,6 +17,11 @@
                                 <label class="font-weight-bold">First name</label>
                                 <input type="text" class="form-control" placeholder="Enter your first name" formControlName="fname">
                                 <small class="text-danger" [class.d-none]="registerForm.get('fname').valid || registerForm.get('fname').untouched">First Name is required</small>
+                                <small class="text-danger" *ngIf="registerForm.get('fname').hasError('usernameValidator')">
+                                    <!-- {{registerForm.get('fname').errors['usernameValidator']}} -->
+                                    Invalid Username
+                                </small>
+                    
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -29,6 +34,18 @@
                         </div>
                             
                         
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="auth" value="auth1" formControlName="auth" (click)="checkAdmin()">
+                                <span class="form-check-label"> Admin </span>
+                              </label>
+                          <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="auth" value="auth2" formControlName="auth" (click)="checkUser()">
+                                <span class="form-check-label"> User </span>
+                              </label>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="font-weight-bold">Email</label>
@@ -51,10 +68,9 @@
                       <div class="form-group">
                         <label for="inputAddress2" class="form-label" class="font-weight-bold">Contact Number</label>
                         <input type="text" class="form-control" id="inputAddress2" placeholder="Enter your contact number" formControlName="tel">
-                        <!-- <small class="text-danger" [class.d-none]="registerForm.get('tel').valid || registerForm.get('tel').untouched">Contact number is required</small> -->
-                        <!-- <small class="text-danger" *ngIf="registerForm.get('tel').invalid && registerForm.get('tel').touched">Mobile Number is required.</small> -->
+                        
                         <small *ngIf="registerForm.get('tel').invalid && registerForm.get('tel').touched" class="text-danger">Phone no is Required(minimum length 10,numbers are only allowed)</small>
-                        <!-- <small class="text-danger" *ngIf="registerForm.get('tel').errors.pattern">Please, Enter 10 digit Mobile Number.</small> -->
+                        
                       </div>
                       <label class="font-weight-bold">Gender</label>
                     <div class="form-group">
@@ -87,7 +103,8 @@
                     <div class="form-group">
                         <label class="font-weight-bold">Confirm Password:</label>
                         <input type="password" id="password" name="password" class="form-control" data-toggle="password" placeholder="Re-type your password" formControlName="pswrpt">
-                        <small class="text-danger" [class.d-none]="registerForm.get('pswrpt').valid || registerForm.get('pswrpt').untouched">Confirm Password is required</small>
+                        <small class="text-danger" [class.d-none]="registerForm.get('pswrpt').valid || registerForm.get('pswrpt').untouched">Re-type Password</small>
+                        
                     </div>
                       <!-- Add skills -->
                       <label class="font-weight-bold">Skills</label>
@@ -112,7 +129,7 @@
                     <div class="form-group">
                         <label for="formFile" class="form-label" class="font-weight-bold">Choose your Resume</label>
                         <input class="form-control" type="file" id="formFile" formControlName="file">
-                        <p class="text-danger" [class.d-none]="registerForm.get('file').valid || registerForm.get('file').untouched">This field is required!</p>
+                        <small class="text-danger" [class.d-none]="registerForm.get('file').valid || registerForm.get('file').untouched">This field is required!</small>
                          
                         
                       </div>
